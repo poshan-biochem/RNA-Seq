@@ -1,3 +1,4 @@
+Rscript tximeta.R
 # load required packages ----
 library(tximeta)
 library(SummarizedExperiment)
