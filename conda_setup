@@ -1,0 +1,2 @@
+conda create -n RNA-Seq
+conda install -c bioconda sratools salmon 
