@@ -1,2 +1,3 @@
 conda create -n RNA-Seq
-conda install -c bioconda sratools salmon 
+conda config --add channels bioconda
+conda install -c bioconda sratools salmon
