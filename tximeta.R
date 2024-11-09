@@ -1,7 +1,34 @@
-new("SummarizedExperiment")
-
+# load required packages ----
+library(tximeta)
 library(SummarizedExperiment)
+library(DESeq2)
+library(org.Hs.eg.db)
 
-"["
-  
-  
+# create a pointer to salmon_quant files ----
+files <- file.path("salmon_quant", c("SRR12345", "SRR12346"), "quant.sf")
+
+file.exists(files)
+
+# write a matrix to build se object ----
+
+coldata <- data.frame(files, names = c("SRR12345", "SRR12346"), condition = c("WT", "KO"))
+
+# build se object ----
+
+se <- tximeta(coldata)
+
+# summarize counts at the gene-level ---- 
+
+gse <- summarizeToGene(se)
+
+# have a look at the structure of gse object----
+
+assay(gse)
+
+colData(gse)
+
+assayNames(gse)
+
+# Since we are plotting gene_ids in volcano plot, I'm adding gene_ids here
+
+gse <- addIds(gse, "REFSEQ", gene = TRUE)
