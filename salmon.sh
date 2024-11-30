@@ -8,12 +8,12 @@ fi
 
 # Define variables
 FASTQ_DIR="$1"                          
-INDEX_PATH="$HOME/salmon_sa_index__default/default/" #hg38 transcriptome index 
-OUTPUT_DIR="salmon_quant"                
+INDEX_PATH="$HOME/salmon_sa_index__default/default/" # decoy-aware index built using entire genome as decoy. Based on GENCODE v47.
+OUTPUT_DIR="salmon_quant" # DO NOT MAKE ANY CHANGES IN THIS DIRECTORY.                 
 THREADS=12 
 CONDA_ENV="RNA-Seq"
 
-# activate conda environemnt
+# Activate conda environemnt
 source "$(conda info --base)/etc/profile.d/conda.sh"
 conda activate $CONDA_ENV                      
 
@@ -22,7 +22,7 @@ mkdir -p $OUTPUT_DIR
 
 # Loop through all *_1.fastq.gz files in the specified directory to find sample pairs
 for READ1 in ${FASTQ_DIR}/*_1.fastq; do
-    # Get the base sample name by removing the _1.fastq.gz suffix
+    # Get the base sample name by removing the _1.fastq suffix
     SAMPLE_NAME=$(basename "$READ1" "_1.fastq")
 
     # Define path for the corresponding mates
@@ -38,15 +38,15 @@ for READ1 in ${FASTQ_DIR}/*_1.fastq; do
 
         # Run Salmon quantification
         salmon quant \
-            -i $INDEX_PATH \
+            -i ${INDEX_PATH} \
             -l A \
-            -1 $READ1 \
-            -2 $READ2 \
-            -p $THREADS \
-            -o $SAMPLE_OUT_DIR
+            -1 ${READ1} \
+            -2 ${READ2} \
+            -p ${THREADS} \
+            -o ${SAMPLE_OUT_DIR}
 
-        echo "Salmon quantification for $SAMPLE_NAME completed and saved to $SAMPLE_OUT_DIR"
+        echo "Salmon quantification for ${SAMPLE_NAME} completed and saved to ${SAMPLE_OUT_DIR}"
     else
-        echo "Skipping $SAMPLE_NAME: missing corresponding _2 file."
+        echo "Skipping ${SAMPLE_NAME}: missing corresponding _2 file."
     fi
 done
