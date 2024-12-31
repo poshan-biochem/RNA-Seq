@@ -8,7 +8,7 @@ fi
 
 # Define variables
 FASTQ_DIR="$1"                          
-INDEX_PATH="$HOME/salmon_sa_index__default/default/" # decoy-aware index built using entire genome as decoy. Based on GENCODE v47.
+INDEX_PATH="$HOME/salmon_sa_index__default/default/" # decoy-aware index built using entire genome as decoy. Based on GENCODE v47 (GRCh38). 
 OUTPUT_DIR="salmon_quant" # DO NOT MAKE ANY CHANGES IN THIS DIRECTORY.                 
 THREADS=12 
 CONDA_ENV="RNA-Seq"
